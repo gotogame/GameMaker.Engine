@@ -24,6 +24,16 @@ namespace GameMakerEngineTestWindows
         {
             base.Update(ms);
 
+            if (KeyboardState.IsPressed(Key.Up))
+            {
+                point.Y -= 2;
+            }
+
+            if (KeyboardState.IsPressed(Key.Down))
+            {
+                point.Y += 2;
+            }
+
             if (KeyboardState.IsPressed(Key.Left))
             {
                 point.X -= 2;

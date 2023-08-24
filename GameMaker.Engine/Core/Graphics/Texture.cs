@@ -131,7 +131,7 @@
         /// 获取指定矩形范围内的像素颜色
         /// (当指定的矩形没有包含在包围盒矩形内时获取失败)
         /// </summary>
-        /// <param name="rectangle">矩形</param>
+        /// <param name="rect">矩形</param>
         /// <returns>获取成功返回Color[rect.Height, rect.Width],获取失败返回null</returns>
         public Color[,] GetColors(Rectangle rect)
         {

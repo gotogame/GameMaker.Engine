@@ -2,31 +2,16 @@
 
   <PropertyGroup>
     <TargetFrameworks>net6.0;net6.0-windows</TargetFrameworks>
-    <ImplicitUsings>disable</ImplicitUsings>
-    <Nullable>disable</Nullable>
-    <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <Version>1.0.0-preview.1</Version>
-    <Authors>gotogame</Authors>
-    <Description>请参阅https://www.gamemaker.cn</Description>
-    <PackageProjectUrl>https://www.gamemaker.cn</PackageProjectUrl>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DebugType>none</DebugType>
-    <GenerateDocumentationFile>True</GenerateDocumentationFile>
-    <NoWarn>1701;1702;1591</NoWarn>
+    <Version>1.0.0-preview.2</Version>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
-    <PackageReference Include="GameMaker.SDL2" Version="1.0.0-preview.1" />
+    <PackageReference Include="GameMaker.SDL2" Version="1.0.0-preview.2" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net6.0-windows'">
-    <PackageReference Include="GameMaker.SDL2" Version="1.0.0-preview.1" />
-    <PackageReference Include="GameMaker.SDL2.Windows" Version="1.0.0-preview.1" />
+    <PackageReference Include="GameMaker.SDL2" Version="1.0.0-preview.2" />
+    <PackageReference Include="GameMaker.SDL2.Windows" Version="1.0.0-preview.2" />
   </ItemGroup>
 
 </Project>

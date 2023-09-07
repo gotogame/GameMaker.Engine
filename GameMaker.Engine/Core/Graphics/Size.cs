@@ -6,6 +6,15 @@
     [JsonConverter(typeof(JsonConverterSize))]
     public struct Size : IEquatable<Size>
     {
+        #region 静态属性
+
+        /// <summary>
+        /// 获取一个宽度与高度都为0的大小
+        /// </summary>
+        public static Size Empty { get; } = new Size(0, 0);
+
+        #endregion
+
         #region 字段
 
         /// <summary>

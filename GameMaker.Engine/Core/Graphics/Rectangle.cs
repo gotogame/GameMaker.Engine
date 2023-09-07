@@ -6,6 +6,15 @@
     [JsonConverter(typeof(JsonConverterRectangle))]
     public struct Rectangle : IEquatable<Rectangle>
     {
+        #region 静态属性
+
+        /// <summary>
+        /// 获取一个X,Y,宽度,高度都为0的矩形
+        /// </summary>
+        public static Rectangle Empty { get; } = new Rectangle(0, 0, 0, 0);
+
+        #endregion
+
         #region 字段
 
         /// <summary>
@@ -105,6 +114,34 @@
             Y = location.Y;
             Width = size.Width;
             Height = size.Height;
+        }
+
+        /// <summary>
+        /// 分别设置X,Y,大小
+        /// </summary>
+        /// <param name="x">X坐标</param>
+        /// <param name="y">Y坐标</param>
+        /// <param name="size">大小(宽,高)</param>
+        public Rectangle(int x, int y, Size size)
+        {
+            X = x;
+            Y = y;
+            Width = size.Width;
+            Height = size.Height;
+        }
+
+        /// <summary>
+        /// 分别设置位置,宽度,高度
+        /// </summary>
+        /// <param name="location">位置(X,Y)</param>
+        /// <param name="width">宽度</param>
+        /// <param name="height">高度</param>
+        public Rectangle(Point location, int width, int height)
+        {
+            X = location.X;
+            Y = location.Y;
+            Width = width;
+            Height = height;
         }
 
         #endregion

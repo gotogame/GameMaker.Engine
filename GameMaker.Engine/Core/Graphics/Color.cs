@@ -4,7 +4,7 @@
     /// 颜色
     /// </summary>
     [JsonConverter(typeof(JsonConverterColor))]
-    public struct Color
+    public struct Color : IEquatable<Color>
     {
         #region 字段
 
@@ -207,6 +207,39 @@
         public static Color Aqua { get; } = new Color(255, 0, 255, 255);
 
         #endregion
+
+        #region 相等性比较
+
+        public override bool Equals(object obj)
+        {
+            return obj is Color color && Equals(color);
+        }
+
+        public bool Equals(Color other)
+        {
+            return A == other.A &&
+                   R == other.R &&
+                   G == other.G &&
+                   B == other.B;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(A, R, G, B);
+        }
+
+        public static bool operator ==(Color left, Color right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(Color left, Color right)
+        {
+            return !(left == right);
+        }
+
+        #endregion
+
     }
 
     #region Json转换器

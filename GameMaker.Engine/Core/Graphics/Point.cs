@@ -148,6 +148,28 @@
             return new Point(a.X / b, a.Y / b);
         }
 
+        //----------------------------------------------------------------------------------------------------
+
+        public static Point operator +(Point a, Size b)
+        {
+            return new Point(a.X + b.Width, a.Y + b.Height);
+        }
+
+        public static Point operator -(Point a, Size b)
+        {
+            return new Point(a.X - b.Width, a.Y - b.Height);
+        }
+
+        public static Point operator *(Point a, Size b)
+        {
+            return new Point(a.X * b.Width, a.Y * b.Height);
+        }
+
+        public static Point operator /(Point a, Size b)
+        {
+            return new Point(a.X / b.Width, a.Y / b.Height);
+        }
+
         #endregion
 
         #region 相等性比较

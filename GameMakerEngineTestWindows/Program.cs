@@ -11,12 +11,8 @@ namespace GameMakerEngineTestWindows
                 Game.Init();
                 Game.CreateWindowAndRenderer();
                 Audio.OpenAudio();
-                Assets.ScriptAsset.LoadAll();
 
-                Map map = new Map();
-                map.Elements.Add(new Element1());
-
-                Engine.Run(map);
+                Engine.Run(new TestMap());
             }
             finally
             {

@@ -1,31 +1,7 @@
 ﻿namespace GameMaker.Engine
 {
-    public static partial class ElementHelper
+    public static partial class MapGraphics
     {
-        #region 绘制纹理
-
-        /// <summary>
-        /// 绘制纹理
-        /// (目标矩形自动转换为相对于视野的坐标)
-        /// </summary>
-        private static void MapDrawTexture(Texture texture, Rectangle srcRect, Rectangle dstRect, Color color, double angle, Point center, bool flipHorizontally, bool flipVertically)
-        {
-            dstRect.Location = Engine.CurrentMap.MapToViewPoint(dstRect.Location);
-            GameRenderer.DrawTexture(texture, srcRect, dstRect, color, angle, center, flipHorizontally, flipVertically);
-        }
-
-        /// <summary>
-        /// 绘制纹理
-        /// (目标矩形自动转换为相对于视野的坐标)
-        /// </summary>
-        private static void MapDrawTexture(Texture texture, Rectangle srcRect, Rectangle dstRect, Color color)
-        {
-            dstRect.Location = Engine.CurrentMap.MapToViewPoint(dstRect.Location);
-            GameRenderer.DrawTexture(texture, srcRect, dstRect, color);
-        }
-
-        #endregion
-
         #region 绘制精灵
 
         /// <summary>
@@ -48,7 +24,7 @@
                 return;
 
             srcRect.Location += sprite.Subimages[index].Bounds.Location;
-            MapDrawTexture(Assets.TextureAsset.Load(sprite.TextureName), Rectangle.Intersect(sprite.Subimages[index].Bounds, srcRect), dstRect, color, angle, center, flipHorizontally, flipVertically);
+            DrawTexture(sprite.TextureName, Rectangle.Intersect(sprite.Subimages[index].Bounds, srcRect), dstRect, color, angle, center, flipHorizontally, flipVertically);
         }
 
         /// <summary>
@@ -67,7 +43,7 @@
                 return;
 
             srcRect.Location += sprite.Subimages[index].Bounds.Location;
-            MapDrawTexture(Assets.TextureAsset.Load(sprite.TextureName), Rectangle.Intersect(sprite.Subimages[index].Bounds, srcRect), dstRect, color);
+            DrawTexture(sprite.TextureName, Rectangle.Intersect(sprite.Subimages[index].Bounds, srcRect), dstRect, color);
         }
 
         //----------------------------------------------------------------------------------------------------
@@ -90,7 +66,7 @@
             if (sprite == null || sprite.Subimages == null || index < 0 || index >= sprite.Subimages.Length)
                 return;
 
-            MapDrawTexture(Assets.TextureAsset.Load(sprite.TextureName), sprite.Subimages[index].Bounds, dstRect, color, angle, center, flipHorizontally, flipVertically);
+            DrawTexture(sprite.TextureName, sprite.Subimages[index].Bounds, dstRect, color, angle, center, flipHorizontally, flipVertically);
         }
 
         /// <summary>
@@ -107,7 +83,7 @@
             if (sprite == null || sprite.Subimages == null || index < 0 || index >= sprite.Subimages.Length)
                 return;
 
-            MapDrawTexture(Assets.TextureAsset.Load(sprite.TextureName), sprite.Subimages[index].Bounds, dstRect, color);
+            DrawTexture(sprite.TextureName, sprite.Subimages[index].Bounds, dstRect, color);
         }
 
         //----------------------------------------------------------------------------------------------------
@@ -135,7 +111,7 @@
             Point dstRectOrigin = new Point(Convert.ToInt32(sprite.Subimages[index].Origin.X * scaleX), Convert.ToInt32(sprite.Subimages[index].Origin.Y * scaleY));
             Rectangle dstRect = new Rectangle(position - dstRectOrigin, dstRectSize);
 
-            MapDrawTexture(Assets.TextureAsset.Load(sprite.TextureName), sprite.Subimages[index].Bounds, dstRect, color, angle, dstRectOrigin, flipHorizontally, flipVertically);
+            DrawTexture(sprite.TextureName, sprite.Subimages[index].Bounds, dstRect, color, angle, dstRectOrigin, flipHorizontally, flipVertically);
         }
 
         /// <summary>
@@ -153,7 +129,7 @@
                 return;
 
             Rectangle dstRect = new Rectangle(position - sprite.Subimages[index].Origin, sprite.Subimages[index].Bounds.Size);
-            MapDrawTexture(Assets.TextureAsset.Load(sprite.TextureName), sprite.Subimages[index].Bounds, dstRect, color);
+            DrawTexture(sprite.TextureName, sprite.Subimages[index].Bounds, dstRect, color);
         }
 
         #endregion

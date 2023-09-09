@@ -1,6 +1,6 @@
 ﻿namespace GameMaker.Engine
 {
-    public static partial class ElementHelper
+    public static partial class MapGraphics
     {
         #region 绘制字符串
 

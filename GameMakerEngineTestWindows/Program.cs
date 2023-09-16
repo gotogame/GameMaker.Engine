@@ -6,19 +6,9 @@ namespace GameMakerEngineTestWindows
     {
         static void Main(string[] args)
         {
-            try
+            using (var game = new Game1())
             {
-                Game.Init();
-                Game.CreateWindowAndRenderer();
-                Audio.OpenAudio();
-
-                Engine.Run(new TestMap());
-            }
-            finally
-            {
-                Audio.CloseAudio();
-                Game.DestroyWindowAndRenderer();
-                Game.Quit();
+                game.Run();
             }
         }
     }

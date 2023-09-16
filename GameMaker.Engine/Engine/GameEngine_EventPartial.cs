@@ -1,6 +1,6 @@
 ﻿namespace GameMaker.Engine
 {
-    public static partial class Game
+    public static partial class GameEngine
     {
         /// <summary>
         /// 更新输入状态与游戏窗口事件

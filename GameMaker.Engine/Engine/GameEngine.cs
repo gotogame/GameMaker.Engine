@@ -1,9 +1,9 @@
 ﻿namespace GameMaker.Engine
 {
     /// <summary>
-    /// 游戏
+    /// 游戏引擎
     /// </summary>
-    public static partial class Game
+    public static partial class GameEngine
     {
         #region 方法
 

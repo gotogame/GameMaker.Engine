@@ -1,26 +1,11 @@
 ﻿namespace GameMaker.Engine
 {
-    /// <summary>
-    /// 引擎
-    /// </summary>
-    public static class Engine
+    public class Game : IDisposable
     {
         #region 属性
 
         /// <summary>
-        /// 当前地图(!=null)
-        /// </summary>
-        public static Map CurrentMap { get; private set; } = new Map();
-
-        /// <summary>
-        /// 下一帧要切换的地图
-        /// (null表示不切换)
-        /// (切换完成后该属性被设置为null)
-        /// </summary>
-        public static Map NextMap { get; set; }
-
-        /// <summary>
-        /// 下一帧退出引擎主循环
+        /// 下一帧退出主循环
         /// </summary>
         public static bool NextExit { get; set; }
 
@@ -65,11 +50,11 @@
         /// </summary>
         private static void UpdateFPS()
         {
-            if ((Game.GetTicks() - _fpsTicks) >= 1000)
+            if ((GameEngine.GetTicks() - _fpsTicks) >= 1000)
             {
                 _fps = _fpsCounter;
                 _fpsCounter = 0;
-                _fpsTicks = Game.GetTicks();
+                _fpsTicks = GameEngine.GetTicks();
             }
             else
             {
@@ -79,16 +64,82 @@
 
         #endregion
 
+        #region 构造函数
+
+        public Game()
+        {
+            GameEngine.Init();
+            GameEngine.CreateWindowAndRenderer();
+            Audio.OpenAudio();
+        }
+
+        #endregion
+
+        #region 释放资源(包含析构函数和 IDisposable 接口实现)
+        ~Game()
+        {
+            Dispose(false);
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        public bool IsDisposed { get { return _isDisposed; } }
+        private bool _isDisposed = false;
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!this._isDisposed)
+            {
+                if (disposing)
+                {
+                    //释放托管资源
+                    Audio.CloseAudio();
+                    GameEngine.DestroyWindowAndRenderer();
+                    GameEngine.Quit();
+                }
+
+                //释放非托管资源
+
+
+                //
+                _isDisposed = true;
+            }
+        }
+        #endregion 释放资源
+
+        #region 事件
+
+        /// <summary>
+        /// 游戏开始事件,游戏开始时引发一次
+        /// </summary>
+        public virtual void GameStart() { }
+
+        /// <summary>
+        /// 游戏结束事件,游戏结束时引发一次
+        /// </summary>
+        public virtual void GameOver() { }
+
+        //----------------------------------------------------------------------------------------------------
+
+        /// <summary>
+        /// 帧事件,每帧引发一次
+        /// </summary>
+        /// <param name="ms">自上一帧以来经过的毫秒数</param>
+        public virtual void Frame(ulong ms) { }
+
+        #endregion
+
         #region 运行
 
         /// <summary>
         /// 运行
         /// </summary>
-        /// <param name="map">当前地图(!=null)</param>
-        public static void Run(Map map)
+        public void Run()
         {
             //初始化相关变量
-            CurrentMap = map ?? throw new ArgumentNullException();
 
             if (GameWindow.Closing == null)
                 GameWindow.Closing = () => { NextExit = true; };
@@ -101,53 +152,37 @@
             ulong delay = 0;             //当前帧需要延时的时间
 
             //引发游戏开始事件
-            CurrentMap.GameStart();
-            CurrentMap.MapLoad();
+            GameStart();
 
             //开始主循环
             while (!NextExit)
             {
                 //计算帧时间
                 previousTicks = currentTicks;
-                currentTicks = Game.GetTicks();
+                currentTicks = GameEngine.GetTicks();
                 ms = currentTicks - previousTicks;
 
                 //更新帧率
                 UpdateFPS();
 
                 //更新输入状态与游戏窗口事件
-                Game.UpdateInputState();
-
-                //切换地图
-                if (NextMap != null)
-                {
-                    CurrentMap.MapUnload();
-
-                    CurrentMap = NextMap;
-                    NextMap = null;
-
-                    CurrentMap.MapLoad();
-                }
+                GameEngine.UpdateInputState();
 
                 //引发帧事件
-                CurrentMap.Frame(ms);
+                Frame(ms);
 
                 //控制帧时间
-                delay = _minFrameTime - (Game.GetTicks() - currentTicks);
+                delay = _minFrameTime - (GameEngine.GetTicks() - currentTicks);
                 if (delay > 0 && delay < uint.MaxValue)
-                    Game.Delay((uint)delay);
+                    GameEngine.Delay((uint)delay);
             }
 
             //引发游戏结束事件
-            CurrentMap.MapUnload();
-            CurrentMap.GameOver();
+            GameOver();
 
-            //
-            CurrentMap = new Map();
-            NextMap = null;
-            NextExit = false;
         }
 
         #endregion
+
     }
 }
